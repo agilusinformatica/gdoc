@@ -1,0 +1,338 @@
+﻿@model GDoc.ViewModels.PropostaViewModel
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <script>
+        function round(value) {
+            return (Math.round(value * 100.0) / 100.0).toString().replace(".", ",");
+        }
+
+        function calculaValoresContrato() {
+
+            var saldoDevedor = 0;
+            var parcelasDividas = 0;
+            var table = document.getElementById("dividas");
+            /*table.rows.forEach(function (row) {
+                // var row = table.rows[i];
+
+                var saldo = parseFloat(row.cells[1].getElementsByTagName("input")[0].value.replace(",", "."));
+                saldoDevedor += saldo;
+
+                var parcela = parseFloat(row.cells[2].getElementsByTagName("input")[0].value.replace(",", "."));
+                parcelasDividas += parcela;
+            });*/
+            for (var i = 1, n = table.rows.length - 1; i < n; i++) {
+                var row = table.rows[i];
+
+                var saldo = parseFloat(row.cells[1].getElementsByTagName("input")[0].value.replace(",", "."));
+                saldoDevedor += saldo;
+
+                var parcela = parseFloat(row.cells[2].getElementsByTagName("input")[0].value.replace(",", "."));
+                parcelasDividas += parcela;
+            }
+
+            $("#DevedorTotal").val(round(saldoDevedor));
+            $("#TotalParcelasDividas").val(round(parcelasDividas));
+
+            var margemUtilizada = $("#MargemUtilizada").val().replace(",", ".");
+            var coeficiente = $("#Coeficiente").val().replace(",", ".");
+            var parcela = parseFloat(parcelasDividas) + parseFloat(margemUtilizada);
+            var contrato = parcela / parseFloat(coeficiente);
+            $("#ValorParcela").val(round(parcela));
+            $("#ValorContrato").val(round(contrato));
+            $("#TrocoCliente").val(round(contrato - saldoDevedor));
+        }
+    </script>
+
+    <div class="form-horizontal">
+        <h4>Proposta</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Identificação", Icone="user"})
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.IdUsuario)
+                    @if (!GDoc.Models.UsuarioLogado.LimitaProposta)
+                    {
+                        <p>@Html.DropDownList("IdUsuario", null, String.Empty, new { @class = "form-control" })</p>    
+                        <p>@Html.ValidationMessageFor(model => model.IdUsuario)</p>
+                    }
+                    else
+                    {
+                        <p>@Html.Encode(User.Identity.Name)</p>
+                    }
+                    
+                </div>
+
+                <div class="col-md-2">
+				    @Html.LabelFor(model => model.DataEntrada)
+                    @Html.EditorFor(model => model.DataEntrada, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.DataEntrada)
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Dados do Cliente"})
+            <div class="row-fluid">
+                <div class="col-md-8">
+				    @Html.LabelFor(model => model.Nome)
+                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Nome)
+                </div>
+                <div class="col-md-2">
+				    @Html.LabelFor(model => model.CPF)
+                    @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.CPF)
+                </div>
+                <div class="col-md-2">
+				    @Html.LabelFor(model => model.DataNascimento)
+                    @Html.EditorFor(model => model.DataNascimento, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.DataNascimento)
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.Matricula)
+                    @Html.EditorFor(model => model.Matricula, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Matricula)
+                </div>
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.SenhaConvenio)
+                    @Html.EditorFor(model => model.SenhaConvenio, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.SenhaConvenio)
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Dados Bancários"})
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.IdBancoConta)
+                    @Html.DropDownList("IdBancoConta", null, String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdBancoConta)
+                </div>
+                <div class="col-md-2">
+				    @Html.LabelFor(model => model.Agencia)
+                    @Html.EditorFor(model => model.Agencia, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Agencia)
+                </div>
+                <div class="col-md-2">
+				    @Html.LabelFor(model => model.ContaCorrente)
+                    @Html.EditorFor(model => model.ContaCorrente, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.ContaCorrente)
+                </div>
+                <div class="col-md-3">
+				    @Html.LabelFor(model => model.IdTipoConta)
+                    @Html.DropDownList("IdTipoConta", null, String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdTipoConta)
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Telefones", Icone = "earphone" })
+            @Html.Partial("_Telefone")
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Dados do Contrato"})
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.IdConvenio)
+                    @Html.DropDownList("IdConvenio", null, String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdConvenio)
+                </div>
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.IdBanco)
+                    @Html.DropDownList("IdBanco", null, String.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdBanco)
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Dívidas", Icone = "usd"})
+            @Html.Partial("_Divida")    
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Desdobramento", Icone = "list-alt"})
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    <label for="TotalParcelasDividas">Total PMT</label>
+                    <input class="form-control text-box single-line" id="TotalParcelasDividas" name="TotalParcelasDividas" type="text" @*value*@ readonly style="text-align: right;" />
+                </div>
+
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.MargemLivre)
+                    @Html.EditorFor(model => model.MargemLivre, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.MargemLivre)
+                </div>
+
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.MargemUtilizada)
+                    @Html.EditorFor(model => model.MargemUtilizada, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.MargemUtilizada)
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.ValorParcela)
+                    @Html.EditorFor(model => model.ValorParcela, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" }, })
+                    @Html.ValidationMessageFor(model => model.ValorParcela)
+                </div>
+
+                <div class="col-md-3">
+				    @Html.LabelFor(model => model.Coeficiente)
+                    @Html.EditorFor(model => model.Coeficiente, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Coeficiente)
+                </div>
+                <div class="col-md-1">
+				    @Html.LabelFor(model => model.QtdeParcelas)
+                    @Html.EditorFor(model => model.QtdeParcelas, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.QtdeParcelas)
+                </div>
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.ValorContrato)
+                    @Html.EditorFor(model => model.ValorContrato, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" }, })
+                    @Html.ValidationMessageFor(model => model.ValorContrato)
+                </div>
+            </div>
+
+            <div class="row-fluid">
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.Tabela)
+                    @Html.EditorFor(model => model.Tabela, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Tabela)
+                </div>
+
+                <div class="col-md-4">
+				    @Html.LabelFor(model => model.DataCoeficiente)
+                    @Html.EditorFor(model => model.DataCoeficiente, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.DataCoeficiente)
+                </div>
+
+                <div class="col-md-4">
+				    <label for="DevedorTotal">Devedor Total</label>
+                    <input class="form-control text-box single-line" id="DevedorTotal" name="DevedorTotal" type="text" @*value*@ readonly style="text-align: right;" />
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+				    <label for="TrocoCliente">Troco Cliente</label>
+                    <input class="form-control text-box single-line" id="TrocoCliente" name="TrocoCliente" type="text" @*value*@ readonly style="text-align: right;" />
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Observação"})
+            <div class="row-fluid">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Observacao)
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        @Html.Partial("_AbrePanel", new GDoc.Models.TituloPanel { Nome = "Endereço", Icone = "home"})
+            <div class="row-fluid">
+                <div class="col-md-9">
+                    @Html.LabelFor(model => model.Endereco)
+                    @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Endereco)
+                </div>
+                <div class="col-md-1">
+                    @Html.LabelFor(model => model.NumeroEndereco)
+                    @Html.EditorFor(model => model.NumeroEndereco, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.NumeroEndereco)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Complemento)
+                    @Html.EditorFor(model => model.Complemento, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Complemento)
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Bairro)
+                    @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Bairro)
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Cidade)
+                    @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Cidade)
+                </div>
+                <div class="col-md-1">
+                    @Html.LabelFor(model => model.Uf)
+                    @Html.EditorFor(model => model.Uf, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Uf)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Cep)
+                    @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control" }, })
+                    @Html.ValidationMessageFor(model => model.Cep)
+                </div>
+            </div>
+        @Html.Partial("_FechaPanel")
+
+        <script>
+            @foreach (var t in Model.Telefones)
+	        {
+                if (t.IdTipoTelefone != null)
+                {
+                    @Html.Raw("addRowTelefone('" + t.Telefone + "', '" + ViewBag.TiposTelefone.Find(t.IdTipoTelefone).Nome + "', " + t.IdTipoTelefone + ");");	 
+                }
+                else
+                {
+                    @Html.Raw("addRowTelefone('" + t.Telefone + "', '', '');");
+                }
+	        }
+            @Html.Raw("reorganizaIdTelefones()");
+        </script>
+
+        <script>
+            @foreach (var t in Model.Dividas)
+	        {
+                if (t.ValorParcela != null)
+                {
+                    @Html.Raw("addRowDivida('" + ViewBag.Bancos.Find(t.IdBanco).Nome + "', " + t.IdBanco + ", '" + Convert.ToString(t.SaldoDevedor) + "', '" + Convert.ToString(t.ValorParcela) + "');");	 
+                }
+                else
+                {
+                    @Html.Raw("addRowDivida('" + ViewBag.Bancos.Find(t.IdBanco).Nome + "', " + t.IdBanco + ", '" + Convert.ToString(t.SaldoDevedor) + "');");	 
+                }
+	        }
+            @Html.Raw("reorganizaIdDividas()");
+        </script>
+
+        <script src="~/Scripts/jquery.inputmask/jquery.inputmask.numeric.extensions-2.5.0.js"></script>
+        <script>
+            $(function () {
+                $("#CPF").inputmask("999.999.999-99");
+                $("#Cep").inputmask("99999-999");
+                $("#ValorParcela").inputmask({ alias: "decimal", groupSeparator: ".", autoGroup: false, radixPoint: "," });
+                $("#MargemLivre").inputmask({ alias: "decimal", groupSeparator: ".", autoGroup: false, radixPoint: "," });
+                $("#MargemUtilizada").inputmask({ alias: "decimal", groupSeparator: ".", autoGroup: false, radixPoint: "," });
+                $("#ValorContrato").inputmask({ alias: "decimal", groupSeparator: ".", autoGroup: false, radixPoint: "," });
+                $("#DataEntrada").inputmask("99/99/9999");
+                $("#DataNascimento").inputmask("99/99/9999");
+                $("#DataCoeficiente").inputmask("99/99/9999");
+
+                $("#MargemUtilizada").keyup(function () { calculaValoresContrato(); });
+                $("#Coeficiente").keyup(function () { calculaValoresContrato(); });
+            })
+        </script>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-4">
+                <input type="submit" value="Gravar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/accounting.min.js"></script>

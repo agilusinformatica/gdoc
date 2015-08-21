@@ -1,0 +1,74 @@
+﻿@model GDoc.ViewModels.BancoViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Inclusão</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Banco</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <h3>Documentos necessários para este banco</h3>
+        <div class="container">
+            <table class="table table-striped table-bordered" style="width: 50%">
+                <tr>
+                    <th></th>
+                    <th>Documento</th>
+                    <th>Obrigatório</th>
+                </tr>
+
+
+                @foreach (var d in Model.Documentos)
+                {
+                        <tr>
+                            <td><input name="s@(d.Id)" id="s@(d.Id)" type="checkbox" /></td>
+                            <td>@d.Nome</td>
+                            <td><input name="o@(d.Id)" id="o@(d.Id)" type="checkbox" /></td>
+                        </tr>
+                }
+
+                </table>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Gravar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar para Listagem", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

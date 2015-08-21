@@ -1,0 +1,23 @@
+﻿@model GDoc.ViewModels.SenhaViewModel
+
+@{
+    ViewBag.Title = "TrocarSenha";
+}
+
+<h2>Trocar Senha</h2>
+
+<div class="col-md-3"> 
+    <form action="/Usuario/TrocarSenha/@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false)<br />
+        <input type="hidden" id="Id" value="@Model.Id"/>
+        Nova senha: <input type="password" name="SenhaNova" id="SenhaNova" class="form-control"/> <br />
+        Repita a nova senha: <input type="password" name="SenhaNovaRepeticao" id="SenhaNovaRepeticao" class="form-control"/> <br />
+        <input type="submit" value="Gravar" onclick="
+            document.getElementById('SenhaNova').value = Sha256.hash(document.getElementById('SenhaNova').value);
+            document.getElementById('SenhaNovaRepeticao').value = Sha256.hash(document.getElementById('SenhaNovaRepeticao').value);
+        "/>
+    </form>
+</div>
+<script src="~/Scripts/sha256.js"></script>
+

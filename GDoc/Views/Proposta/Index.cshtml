@@ -1,0 +1,152 @@
+﻿@model IEnumerable<GDoc.Models.Proposta>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Proposta</h2>
+
+<p>
+    @Html.ActionLink("Incluir", "Create")
+</p>
+
+<div class="row-fluid">
+    <div class="col-md-3">
+        Status<br/>
+        <select class="form-control" name="Status" id="Status">
+            <option value=""></option>
+            <option value="0">Sem anexos</option>
+            <option value="1">Com anexos, falta obrigatórios</option>
+            <option value="2">Anexos OK</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        Data de Entrada<br/>
+        <input class="form-control" type="text" name="DataEntradaInicial" id="DataEntradaInicial" />
+    </div>
+    <div class="col-md-2">
+        <br/>
+        <input class="form-control" type="text" name="DataEntradaFinal" id="DataEntradaFinal" />
+    </div>
+    <div class="col-md-1">
+        <br/>
+        <button class="btn btn-default" onclick="ConsultaPropostas()">Consultar</button>
+    </div>
+</div>
+
+<script>
+    function ConsultaPropostas()
+    {
+        var status = document.getElementById("Status").value;
+        var dataInicial = document.getElementById("DataEntradaInicial").value;
+        var dataFinal = document.getElementById("DataEntradaFinal").value;
+        location.href = "/Proposta?Status=" + status + "&DataEntradaInicial=" + dataInicial + "&DataEntradaFinal=" + dataFinal;
+    }
+</script>
+<script src="~/Scripts/jquery.inputmask/jquery.inputmask-2.5.0.js"></script>
+<script>
+    $(function () {
+        $("#DataEntradaInicial").inputmask("99/99/9999");
+        $("#DataEntradaFinal").inputmask("99/99/9999");
+    })
+</script>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            Anexos
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataEntrada)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CPF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdeParcelas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ValorContrato)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tabela)
+        </th>
+        <th>
+            Banco@*@Html.DisplayNameFor(model => model.Banco.Nome)*@
+        </th>
+        <th>
+            Convênio@*@Html.DisplayNameFor(model => model.Convenio.Nome)*@
+        </th>
+        <th>
+            Agente@*@Html.DisplayNameFor(model => model.Usuario.Login)*@
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="/Proposta/Anexos/@item.Id">
+            @switch (item.StatusDocumentacao)
+            {
+                case 0: 
+                    <img src="~/Content/themes/base/images/clip_cross.png" />
+                    break;
+                case 1: 
+                    <img src="~/Content/themes/base/images/clip_info.png" />
+                    break;
+                case 2: 
+                    <img src="~/Content/themes/base/images/clip.png" />
+                    break;
+                default:
+                    break;
+            }
+            </a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataEntrada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CPF)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdeParcelas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ValorContrato)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tabela)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Banco.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Convenio.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario.Login)
+        </td>
+        <td>
+            @Html.ActionLink("Alterar", "Edit", new { id=item.Id }, new {@class = "btn btn-primary btn-xs"})
+            @Html.ActionLink("Excluir", "Delete", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+

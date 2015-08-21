@@ -1,0 +1,126 @@
+﻿<style>
+    div#container-dividas {
+        width: 600px;
+        margin: 0px 0;
+    }
+    div#container-dividas table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    /*div#container-dividas table td, div#container-dividas table th {
+        border: 1px solid #eee;
+        padding: .6em 10px;
+        text-align: left;
+    }*/
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    .coluna-valor { text-align: right; }
+</style>
+<script>
+   function reorganizaIdDividas() {
+        var table = document.getElementById("dividas");
+        for (var i = 1, n = table.rows.length-1; i < n; i++) {
+            var row = table.rows[i];
+            
+            row.cells[0].getElementsByTagName("input")[0].id = "idbancodivida" + i;
+            row.cells[0].getElementsByTagName("input")[0].setAttribute("name", "idbancodivida" + i);
+            row.cells[1].getElementsByTagName("input")[0].id = "saldodevedordivida" + i;
+            row.cells[1].getElementsByTagName("input")[0].setAttribute("name", "saldodevedordivida" + i);
+            row.cells[2].getElementsByTagName("input")[0].id = "valorparceladivida" + i;
+            row.cells[2].getElementsByTagName("input")[0].setAttribute("name", "valorparceladivida" + i);
+
+        }
+        calculaValoresContrato();
+    }
+
+    function deleteRowDivida(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("dividas").deleteRow(i);
+        reorganizaIdDividas();
+    }
+
+    function addRowDivida(banco, idBanco, saldoDevedor, valorParcela) {
+        $("#dividas tbody").append("<tr>" +
+            "<td>" + banco + "<input type=\"hidden\" value=\"" + idBanco + "\"/></td>" +
+            "<td class=\"coluna-valor\">" + saldoDevedor + "<input type=\"hidden\" value=\"" + saldoDevedor + "\"/></td>" +
+            "<td class=\"coluna-valor\">" + valorParcela + "<input type=\"hidden\" value=\"" + valorParcela + "\"/></td>" +
+            "<td><span class=\"btn btn-primary btn-xs\" onclick=\"deleteRowDivida(this)\">excluir</span></td>" +
+            "</tr>");
+    }
+
+
+    $(function () {
+        $("#dialog-form-divida").dialog({
+            autoOpen: false,
+            height: 350,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Salvar": function () {
+                    var combobox = document.getElementById('idBanco');
+                    var saldoDevedor = document.getElementById('saldoDevedor').value;
+                    var valorParcela = document.getElementById('valorParcela').value;
+
+                    addRowDivida(combobox.options[combobox.selectedIndex].innerHTML, combobox.value, saldoDevedor, valorParcela);
+
+                    reorganizaIdDividas();
+
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+        });
+ 
+        $("#IncluirDivida")
+        .button()
+        .click(function() {
+            $("#dialog-form-divida").dialog("open");
+        });
+    });
+
+</script>
+
+<div id="dialog-form-divida" title="Nova Dívida">
+    <form>
+        <fieldset>
+            <label for="telefone">Banco</label>
+            @Html.DropDownList("idBanco", null, String.Empty, new { @class = "form-control" })
+            <label for="saldoDevedor">Saldo Devedor</label>
+            <input type="text" name="saldoDevedor" id="saldoDevedor" class="form-control">
+            <label for="valorParcela">Valor Parcela</label>
+            <input type="text" name="valorParcela" id="valorParcela" class="form-control">
+        </fieldset>
+    </form>
+</div>
+
+<div id="container-dividas" class="ui-widget">
+    <table id="dividas">
+        <thead>
+            <tr>
+                <th>Banco</th>
+                <th class="coluna-valor">Saldo Devedor</th>
+                <th class="coluna-valor">Valor Parcela</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <span id="IncluirDivida" class="btn btn-primary">Incluir Dívida</span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="~/Scripts/jquery.inputmask/jquery.inputmask-2.5.0.js"></script>
+<script>
+    $(function () {
+        $("#saldoDevedor").inputmask({ alias: "decimal", groupSeparator: ".", autoGroup: false, radixPoint: "," });
+        $("#valorParcela").inputmask({ alias: "decimal", groupSeparator: ".", autoGroup: false, radixPoint: "," });
+    })
+</script>

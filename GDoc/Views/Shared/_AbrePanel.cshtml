@@ -1,0 +1,14 @@
+﻿@model GDoc.Models.TituloPanel
+
+        <div class="panel panel-primary" style="margin-left: 5px">
+            <div class="panel-heading" style="padding: 5px 3px">
+                <h4 class="panel-title">
+                    @if (!String.IsNullOrEmpty(Model.Icone))
+                    {
+                        <span class="glyphicon glyphicon-@Model.Icone"></span>
+                    }
+                    @Model.Nome
+                </h4>
+                
+            </div>
+            <div class="panel-body" style="margin: 0px 10px">

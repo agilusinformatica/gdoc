@@ -1,0 +1,17 @@
+﻿@model GDoc.ViewModels.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Inclusão</h2>
+
+@Html.Partial("_CadUsuario") 
+
+<div>
+    @Html.ActionLink("Voltar para Listagem", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

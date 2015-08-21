@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Gerenciador de Documentos</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery-ui-1.10.4.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("GDoc", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Propostas <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Consultar", "Index", "Proposta")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Incluir Proposta", "Create", "Proposta")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Segurança <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Usuários", "Index", "Usuario")</li>
+                            <li>@Html.ActionLink("Perfis", "Index", "Perfil")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configurações <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Bancos", "Index", "Banco")</li>
+                            <li>@Html.ActionLink("Convênios", "Index", "Convenio")</li>
+                            <li>@Html.ActionLink("Filiais", "Index", "Filial")</li>
+                            <li>@Html.ActionLink("Tipos de Conta", "Index", "TipoConta")</li>
+                            <li>@Html.ActionLink("Tipos de Documento", "Index", "TipoDocumento")</li>
+                            <li>@Html.ActionLink("Tipos de Telefone", "Index", "TipoTelefone")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.Encode(User.Identity.Name) <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink(
+                                    linkText: "Trocar Senha", 
+                                    actionName: "TrocarSenha", 
+                                    controllerName: "Usuario", 
+                                    routeValues: new { id = GDoc.Models.UsuarioLogado.IdUsuario },
+                                    htmlAttributes: null)
+                            </li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Sair", "Logout", "Login")</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,151 @@
+﻿@using GDoc.Models;
+@model GDoc.Models.Imagem
+@{
+    ViewBag.Title = "Anexos";
+}
+
+<h2>Anexos</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data"}))
+{ 
+    <input type="file" id="Arquivos" name="Arquivos" class="form-control"/>
+    <br/>
+    <input type="hidden" id="IdProposta" name="IdProposta" value="@ViewBag.Modelo.IdProposta"/>
+    <input type="hidden" id="IdTipoDocumentoSelecionado" name="IdTipoDocumentoSelecionado" />
+    <input type="hidden" id="IdDocumentoPropostaExcluido" name="IdDocumentoPropostaExcluido" />
+
+    <table border="1">
+
+    @foreach (var doc in ViewBag.Modelo.Docs)
+    {
+        <tr id="doc@(doc.IdTipoDocumento)">
+           <td style="padding: 5px">
+               @doc.TipoDocumento.Nome
+               @{
+                    bool temAnexos = false;
+                    bool obrigatorio = doc.Obrigatorio;
+                    foreach (var imagem in ((List<DocumentoProposta>)ViewBag.Modelo.Imagens).Where(i => i.IdTipoDocumento == doc.IdTipoDocumento))
+                    {
+                        temAnexos = true;
+                        string link = ViewBag.Modelo.PastaRaiz + "/" + ViewBag.Modelo.IdProposta + "/" + imagem.NomeArquivo;
+                        link = link.Replace("~", "../..");
+                        <br/>
+                        <input type="submit" class="btn btn-default" style="padding: 4px" value="X" onclick="DefineDocumentoExcluido(@(imagem.Id))" />
+                        <a style="padding-left: 20px" href="@(link)">@imagem.NomeArquivo</a>               
+                    }
+               } 
+           </td>
+           
+           @if (temAnexos)
+           {
+                <td style="padding: 5px"><span class="btn btn-primary" onclick="DefineTipoDocumento(@(doc.IdTipoDocumento))" >anexar</span></td>    
+           }
+           else
+           {
+               if (obrigatorio)
+               { 
+                   <td style="padding: 5px"><span class="btn btn-danger" onclick="DefineTipoDocumento(@(doc.IdTipoDocumento))" >anexar</span></td>
+               }
+               else
+               {
+                   <td style="padding: 5px"><span class="btn btn-success" onclick="DefineTipoDocumento(@(doc.IdTipoDocumento))" >anexar</span></td>
+               }
+           }
+          
+       
+        </tr>        
+    }
+    </table>
+    <div id="uploadPreview"></div>
+
+}
+<br/>
+<div>
+    @Html.ActionLink("Voltar para Listagem", "Index")
+</div>
+
+<img id="novaImagem" style="max-height: 300px; max-width: 320px"/>
+
+<script>
+    function DefineTipoDocumento(idTipoDocumento)
+    {
+        document.getElementById("IdTipoDocumentoSelecionado").value = idTipoDocumento;
+        var novaImagem = document.getElementById("novaImagem");
+        if (novaImagem.src == "") {
+            alert("Selecione uma imagem antes de anexar");
+            return;
+        }
+        jic.upload(novaImagem, "http://localhost:7972/Proposta/Anexos/", "file", "novoarquivo.jpg");
+    }
+
+    function DefineDocumentoExcluido(idDocumentoProposta)
+    {
+        document.getElementById("IdDocumentoPropostaExcluido").value = idDocumentoProposta;
+    }
+
+</script>
+<script src="~/Scripts/JIC.js"></script>
+<script>
+/*
+function readImage(file) {
+
+    var reader = new FileReader();
+    var image = new Image();
+
+    reader.readAsDataURL(file);
+    reader.onload = function (_file) {
+        image.src = _file.target.result;              // url.createObjectURL(file);
+        image.onload = function () {
+            var w = this.width,
+                h = this.height,
+                t = file.type,                           // ext only: // file.type.split('/')[1],
+                n = file.name,
+                s = ~~(file.size / 1024) + 'KB';
+            $('#uploadPreview').append('<img src="' + this.src + '"> ' + w + 'x' + h + ' ' + s + ' ' + t + ' ' + n + '<br>');
+        };
+        image.onerror = function () {
+            alert('Invalid file type: ' + file.type);
+        };
+    };
+}
+
+$("#Arquivos").change(function (e) {
+    if (this.disabled) return alert('File upload not supported!');
+    var F = this.files;
+    if (F && F[0]) for (var i = 0; i < F.length; i++) readImage(F[i]);
+});
+*/
+
+var control = document.getElementById("Arquivos");
+control.addEventListener("change", function(event) {
+
+    // When the control has changed, there are new files
+
+    var i = 0,
+        files = control.files,
+        len = files.length;
+
+    var reader = new FileReader();
+    var image = new Image();
+    var image_compact = new Image();
+
+    for (; i < len; i++) {
+        console.log("Filename: " + files[i].name);
+        console.log("Type: " + files[i].type);
+        console.log("Size: " + files[i].size + " bytes");
+        reader.readAsDataURL(files[i]);
+        reader.onload = function (_file) {
+            image.src = _file.target.result;              
+            image.onload = function () {
+                image_compact = jic.compress(image, 30, "jpg");
+                console.log("Src antes: " + image.src);
+                console.log("Src depois: " + image_compact.src);
+                document.getElementById('novaImagem').src = image_compact.src;
+            }
+        }
+
+    }
+
+}, false);
+
+</script>

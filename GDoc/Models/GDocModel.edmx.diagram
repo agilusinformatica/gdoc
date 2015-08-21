@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3b42472725e542ffbbed03892b210e48" Name="Diagram1" DisplayType="false">
+        <EntityTypeShape EntityType="dbGDocModel.Acesso" Width="1.5" PointX="11" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Banco" Width="1.875" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.BancoDocumento" Width="1.5" PointX="3.375" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Convenio" Width="1.5" PointX="4.125" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Divida" Width="1.5" PointX="3.375" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.DocumentoProposta" Width="1.5" PointX="8.625" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Filial" Width="1.5" PointX="1.875" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Funcao" Width="1.5" PointX="8.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Parametro" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Perfil" Width="1.5" PointX="1.875" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Proposta" Width="1.5" PointX="6.375" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.TelefoneProposta" Width="1.5" PointX="8.625" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.TelefoneUsuario" Width="1.5" PointX="8.625" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.TipoConta" Width="1.5" PointX="4.125" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.TipoDocumento" Width="1.75" PointX="0.875" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.TipoTelefone" Width="2" PointX="5.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGDocModel.Usuario" Width="1.5" PointX="4.125" PointY="15.125" IsExpanded="true" />
+        <AssociationConnector Association="dbGDocModel.FK_Acesso_Funcao" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Acesso_Perfil" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_BancoDocumento_Banco" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Divida_Banco" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Proposta_Banco" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_BancoDocumento_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Proposta_Convenio" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Divida_Proposta" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_DocumentoProposta_Proposta" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_DocumentoProposta_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Usuario_Filial" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Funcao_Funcao" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Usuario_Perfil" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Proposta_TipoConta" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Proposta_Usuario" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="dbGDocModel.FK_Proposta_Usuario1" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_TelefoneProposta_Proposta" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_TelefoneProposta_TipoTelefone" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_TelefoneUsuario_TipoTelefone" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_TelefoneUsuario_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="dbGDocModel.FK_Proposta_Banco1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

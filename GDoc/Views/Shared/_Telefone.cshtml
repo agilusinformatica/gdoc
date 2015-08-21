@@ -1,0 +1,115 @@
+﻿<style>
+    div#container-telefones {
+        width: 350px;
+        margin: 0px 0;
+    }
+    div#container-telefones table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    /*div#container-telefones table td, div#container-telefones table th {
+        border: 1px solid #eee;
+        padding: .6em 10px;
+        text-align: left;
+    }*/
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+</style>
+<script>
+    function reorganizaIdTelefones() {
+        var table = document.getElementById("telefones");
+        for (var i = 1, n = table.rows.length-1; i < n; i++) {
+            var row = table.rows[i];
+            
+            /*row.cells[0].getElementsByTagName("input")[0].id = "telefone" + i;
+            row.cells[0].getElementsByTagName("input")[0].setAttribute("name", "telefone" + i);
+            row.cells[1].getElementsByTagName("input")[0].id = "idtipotelefone" + i;
+            row.cells[1].getElementsByTagName("input")[0].setAttribute("name", "idtipotelefone" + i);*/
+        }
+    }
+
+    function deleteRowTelefone(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("telefones").deleteRow(i);
+        reorganizaIdTelefones();
+    }
+
+    function addRowTelefone(telefone, tipoTelefone, idTipoTelefone) {
+        $("#telefones tbody").append('<tr>' +
+            '<td>' + telefone + '<input type="hidden" name="telefone" id="telefone" value="' + telefone + '"/></td>' +
+            '<td>' + tipoTelefone + '<input type="hidden" name="idtipotelefone" id="idtipotelefone" value="' + idTipoTelefone + '"/></td>' +
+            '<td><span class="btn btn-primary" onclick="deleteRowTelefone(this)">excluir</span></td>' +
+            '</tr>');
+    }
+
+
+    $(function () {
+        $( "#dialog-form-telefone" ).dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Salvar": function () {
+                    var combobox = document.getElementById('IdTipoTelefone');
+                    var telefone = document.getElementById('telefonenovo').value;
+
+                    addRowTelefone(telefone, combobox.options[combobox.selectedIndex].innerHTML, combobox.value);
+
+                    reorganizaIdTelefones();
+
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            },
+        });
+ 
+        $("#IncluirTelefone")
+        .button()
+        .click(function() {
+            $( "#dialog-form-telefone" ).dialog( "open" );
+        });
+    });
+
+</script>
+
+<div id="dialog-form-telefone" title="Novo Telefone">
+    <form>
+        <fieldset>
+            <label for="telefonenovo">Telefone</label>
+            <input type="text" name="telefonenovo" id="telefonenovo" class="form-control">
+            <label for="IdTipoTelefone">Tipo</label>
+            @Html.DropDownList("IdTipoTelefone", null, String.Empty, new { @class = "form-control" })
+        </fieldset>
+    </form>
+</div>
+
+<div id="container-telefones" class="ui-widget">
+    <table id="telefones">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Tipo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <span id="IncluirTelefone" class="btn btn-primary">Incluir Telefone</span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="~/Scripts/jquery.inputmask/jquery.inputmask-2.5.0.js"></script>
+<script>
+    $(function () {
+        $("#telefonenovo").inputmask("(99)99999-9999");
+    })
+</script>

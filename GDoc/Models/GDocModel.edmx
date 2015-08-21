@@ -1,0 +1,1463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbGDocModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acesso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFuncao" Type="int" Nullable="false" />
+          <Property Name="IdPerfil" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Banco">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BancoDocumento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdBanco" Type="int" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="Obrigatorio" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Convenio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Divida">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdBanco" Type="int" Nullable="false" />
+          <Property Name="IdProposta" Type="int" Nullable="false" />
+          <Property Name="SaldoDevedor" Type="money" Nullable="false" />
+          <Property Name="ValorParcela" Type="money" />
+        </EntityType>
+        <EntityType Name="DocumentoProposta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProposta" Type="int" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NomeArquivo" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Filial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ativa" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Funcao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdFuncaoSuperior" Type="int" />
+          <Property Name="Link" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="PastaRaiz" Type="varchar" MaxLength="500" />
+          <Property Name="TaxaCompressao" Type="int" />
+          <Property Name="Sequencia" Type="int" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="LimitaPropostaUsuarioLogado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proposta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="DataEntrada" Type="date" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" />
+          <Property Name="CPF" Type="varchar" MaxLength="14" />
+          <Property Name="DataNascimento" Type="date" />
+          <Property Name="Matricula" Type="varchar" MaxLength="20" />
+          <Property Name="SenhaConvenio" Type="varchar" MaxLength="50" />
+          <Property Name="IdBancoConta" Type="int" />
+          <Property Name="Agencia" Type="varchar" MaxLength="20" />
+          <Property Name="ContaCorrente" Type="varchar" MaxLength="20" />
+          <Property Name="IdTipoConta" Type="int" />
+          <Property Name="IdUsuarioDigitacao" Type="int" />
+          <Property Name="DataDigitacao" Type="datetime" />
+          <Property Name="IdConvenio" Type="int" Nullable="false" />
+          <Property Name="IdBanco" Type="int" Nullable="false" />
+          <Property Name="ValorParcela" Type="money" />
+          <Property Name="MargemLivre" Type="money" />
+          <Property Name="MargemUtilizada" Type="money" />
+          <Property Name="Coeficiente" Type="float" />
+          <Property Name="QtdeParcelas" Type="int" />
+          <Property Name="ValorContrato" Type="money" />
+          <Property Name="Tabela" Type="varchar" MaxLength="50" />
+          <Property Name="DataCoeficiente" Type="date" />
+          <Property Name="Observacao" Type="varchar(max)" />
+          <Property Name="Endereco" Type="varchar" MaxLength="100" />
+          <Property Name="NumeroEndereco" Type="varchar" MaxLength="10" />
+          <Property Name="Bairro" Type="varchar" MaxLength="100" />
+          <Property Name="Cidade" Type="varchar" MaxLength="100" />
+          <Property Name="Uf" Type="varchar" MaxLength="2" />
+          <Property Name="Cep" Type="varchar" MaxLength="8" />
+          <Property Name="Complemento" Type="varchar" MaxLength="50" />
+          <Property Name="StatusDocumentacao" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="DataImpressao" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TelefoneProposta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProposta" Type="int" Nullable="false" />
+          <Property Name="IdTipoTelefone" Type="int" />
+          <Property Name="Telefone" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TelefoneUsuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdTipoTelefone" Type="int" />
+          <Property Name="Telefone" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoConta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoTelefone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" />
+          <Property Name="Senha" Type="varchar" MaxLength="100" />
+          <Property Name="IdPerfil" Type="int" Nullable="false" />
+          <Property Name="IdFilial" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="Empresa" Type="varchar" MaxLength="100" />
+          <Property Name="Cpf" Type="varchar" MaxLength="14" />
+          <Property Name="Rg" Type="varchar" MaxLength="20" />
+          <Property Name="Endereco" Type="varchar" MaxLength="100" />
+          <Property Name="NumeroEndereco" Type="varchar" MaxLength="10" />
+          <Property Name="Bairro" Type="varchar" MaxLength="100" />
+          <Property Name="Cidade" Type="varchar" MaxLength="100" />
+          <Property Name="Uf" Type="varchar" MaxLength="2" />
+          <Property Name="Cep" Type="varchar" MaxLength="8" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="TrocarSenha" Type="bit" Nullable="false" />
+          <Property Name="Complemento" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Acesso_Funcao">
+          <End Role="Funcao" Type="Self.Funcao" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acesso" Type="Self.Acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Acesso">
+              <PropertyRef Name="IdFuncao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Acesso_Perfil">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acesso" Type="Self.Acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Acesso">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoDocumento_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BancoDocumento" Type="Self.BancoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BancoDocumento">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoDocumento_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BancoDocumento" Type="Self.BancoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BancoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Divida_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
+          <End Role="Divida" Type="Self.Divida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Divida">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Divida_Proposta">
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Divida" Type="Self.Divida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proposta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Divida">
+              <PropertyRef Name="IdProposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoProposta_Proposta">
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DocumentoProposta" Type="Self.DocumentoProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proposta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentoProposta">
+              <PropertyRef Name="IdProposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoProposta_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="DocumentoProposta" Type="Self.DocumentoProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentoProposta">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Funcao_Funcao">
+          <End Role="Funcao" Type="Self.Funcao" Multiplicity="0..1" />
+          <End Role="Funcao1" Type="Self.Funcao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Funcao1">
+              <PropertyRef Name="IdFuncaoSuperior" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Banco1">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="0..1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdBancoConta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Convenio">
+          <End Role="Convenio" Type="Self.Convenio" Multiplicity="1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Convenio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdConvenio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_TipoConta">
+          <End Role="TipoConta" Type="Self.TipoConta" Multiplicity="0..1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoConta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdTipoConta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdUsuarioDigitacao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneProposta_Proposta">
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TelefoneProposta" Type="Self.TelefoneProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proposta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneProposta">
+              <PropertyRef Name="IdProposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneProposta_TipoTelefone">
+          <End Role="TipoTelefone" Type="Self.TipoTelefone" Multiplicity="0..1" />
+          <End Role="TelefoneProposta" Type="Self.TelefoneProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoTelefone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneProposta">
+              <PropertyRef Name="IdTipoTelefone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneUsuario_TipoTelefone">
+          <End Role="TipoTelefone" Type="Self.TipoTelefone" Multiplicity="0..1" />
+          <End Role="TelefoneUsuario" Type="Self.TelefoneUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoTelefone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneUsuario">
+              <PropertyRef Name="IdTipoTelefone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneUsuario_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TelefoneUsuario" Type="Self.TelefoneUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Filial">
+          <End Role="Filial" Type="Self.Filial" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdFilial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Perfil">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GravaAcessos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seq" Type="int" Mode="In" />
+          <Parameter Name="IdPerfil" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GravaBancoDocumentos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seq" Type="int" Mode="In" />
+          <Parameter Name="IdBanco" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GravaDividasProposta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seq" Type="int" Mode="In" />
+          <Parameter Name="IdProposta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GravaTelefonesProposta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seq" Type="int" Mode="In" />
+          <Parameter Name="IdProposta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GravaTelefonesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="seq" Type="int" Mode="In" />
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ObtemSequencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="dbGDocModelStoreContainer">
+          <EntitySet Name="Acesso" EntityType="Self.Acesso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banco" EntityType="Self.Banco" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BancoDocumento" EntityType="Self.BancoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Convenio" EntityType="Self.Convenio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Divida" EntityType="Self.Divida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentoProposta" EntityType="Self.DocumentoProposta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filial" EntityType="Self.Filial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Funcao" EntityType="Self.Funcao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proposta" EntityType="Self.Proposta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelefoneProposta" EntityType="Self.TelefoneProposta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelefoneUsuario" EntityType="Self.TelefoneUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoConta" EntityType="Self.TipoConta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoTelefone" EntityType="Self.TipoTelefone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Acesso_Funcao" Association="Self.FK_Acesso_Funcao">
+            <End Role="Funcao" EntitySet="Funcao" />
+            <End Role="Acesso" EntitySet="Acesso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Acesso_Perfil" Association="Self.FK_Acesso_Perfil">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Acesso" EntitySet="Acesso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoDocumento_Banco" Association="Self.FK_BancoDocumento_Banco">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="BancoDocumento" EntitySet="BancoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoDocumento_TipoDocumento" Association="Self.FK_BancoDocumento_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="BancoDocumento" EntitySet="BancoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Divida_Banco" Association="Self.FK_Divida_Banco">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="Divida" EntitySet="Divida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Divida_Proposta" Association="Self.FK_Divida_Proposta">
+            <End Role="Proposta" EntitySet="Proposta" />
+            <End Role="Divida" EntitySet="Divida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoProposta_Proposta" Association="Self.FK_DocumentoProposta_Proposta">
+            <End Role="Proposta" EntitySet="Proposta" />
+            <End Role="DocumentoProposta" EntitySet="DocumentoProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoProposta_TipoDocumento" Association="Self.FK_DocumentoProposta_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="DocumentoProposta" EntitySet="DocumentoProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Funcao_Funcao" Association="Self.FK_Funcao_Funcao">
+            <End Role="Funcao" EntitySet="Funcao" />
+            <End Role="Funcao1" EntitySet="Funcao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Banco" Association="Self.FK_Proposta_Banco">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="Proposta" EntitySet="Proposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Banco1" Association="Self.FK_Proposta_Banco1">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="Proposta" EntitySet="Proposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Convenio" Association="Self.FK_Proposta_Convenio">
+            <End Role="Convenio" EntitySet="Convenio" />
+            <End Role="Proposta" EntitySet="Proposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_TipoConta" Association="Self.FK_Proposta_TipoConta">
+            <End Role="TipoConta" EntitySet="TipoConta" />
+            <End Role="Proposta" EntitySet="Proposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Usuario" Association="Self.FK_Proposta_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proposta" EntitySet="Proposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Usuario1" Association="Self.FK_Proposta_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Proposta" EntitySet="Proposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneProposta_Proposta" Association="Self.FK_TelefoneProposta_Proposta">
+            <End Role="Proposta" EntitySet="Proposta" />
+            <End Role="TelefoneProposta" EntitySet="TelefoneProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneProposta_TipoTelefone" Association="Self.FK_TelefoneProposta_TipoTelefone">
+            <End Role="TipoTelefone" EntitySet="TipoTelefone" />
+            <End Role="TelefoneProposta" EntitySet="TelefoneProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneUsuario_TipoTelefone" Association="Self.FK_TelefoneUsuario_TipoTelefone">
+            <End Role="TipoTelefone" EntitySet="TipoTelefone" />
+            <End Role="TelefoneUsuario" EntitySet="TelefoneUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneUsuario_Usuario" Association="Self.FK_TelefoneUsuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="TelefoneUsuario" EntitySet="TelefoneUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Filial" Association="Self.FK_Usuario_Filial">
+            <End Role="Filial" EntitySet="Filial" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Perfil" Association="Self.FK_Usuario_Perfil">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbGDocModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acesso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFuncao" Type="Int32" Nullable="false" />
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Funcao" Relationship="Self.FK_Acesso_Funcao" FromRole="Acesso" ToRole="Funcao" />
+          <NavigationProperty Name="Perfil" Relationship="Self.FK_Acesso_Perfil" FromRole="Acesso" ToRole="Perfil" />
+        </EntityType>
+        <EntityType Name="Banco">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BancoDocumentos" Relationship="Self.FK_BancoDocumento_Banco" FromRole="Banco" ToRole="BancoDocumento" />
+          <NavigationProperty Name="Dividas" Relationship="Self.FK_Divida_Banco" FromRole="Banco" ToRole="Divida" />
+          <NavigationProperty Name="PropostasBancos" Relationship="dbGDocModel.FK_Proposta_Banco" FromRole="Banco" ToRole="Proposta" />
+          <NavigationProperty Name="Propostas" Relationship="dbGDocModel.FK_Proposta_Banco1" FromRole="Banco" ToRole="Proposta" />
+        </EntityType>
+        <EntityType Name="BancoDocumento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="Obrigatorio" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Banco" Relationship="Self.FK_BancoDocumento_Banco" FromRole="BancoDocumento" ToRole="Banco" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_BancoDocumento_TipoDocumento" FromRole="BancoDocumento" ToRole="TipoDocumento" />
+        </EntityType>
+        <EntityType Name="Convenio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Propostas" Relationship="Self.FK_Proposta_Convenio" FromRole="Convenio" ToRole="Proposta" />
+        </EntityType>
+        <EntityType Name="Divida">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="IdProposta" Type="Int32" Nullable="false" />
+          <Property Name="SaldoDevedor" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ValorParcela" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Banco" Relationship="Self.FK_Divida_Banco" FromRole="Divida" ToRole="Banco" />
+          <NavigationProperty Name="Proposta" Relationship="Self.FK_Divida_Proposta" FromRole="Divida" ToRole="Proposta" />
+        </EntityType>
+        <EntityType Name="DocumentoProposta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProposta" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NomeArquivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Proposta" Relationship="Self.FK_DocumentoProposta_Proposta" FromRole="DocumentoProposta" ToRole="Proposta" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_DocumentoProposta_TipoDocumento" FromRole="DocumentoProposta" ToRole="TipoDocumento" />
+        </EntityType>
+        <EntityType Name="Filial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ativa" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Filial" FromRole="Filial" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Funcao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdFuncaoSuperior" Type="Int32" />
+          <Property Name="Link" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Acessos" Relationship="Self.FK_Acesso_Funcao" FromRole="Funcao" ToRole="Acesso" />
+          <NavigationProperty Name="FuncoesInferiores" Relationship="Self.FK_Funcao_Funcao" FromRole="Funcao" ToRole="Funcao1" />
+          <NavigationProperty Name="FuncaoSuperior" Relationship="Self.FK_Funcao_Funcao" FromRole="Funcao1" ToRole="Funcao" />
+        </EntityType>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="PastaRaiz" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TaxaCompressao" Type="Int32" />
+          <Property Name="Sequencia" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Acessos" Relationship="Self.FK_Acesso_Perfil" FromRole="Perfil" ToRole="Acesso" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Perfil" FromRole="Perfil" ToRole="Usuario" />
+          <Property Name="LimitaPropostaUsuarioLogado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proposta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="DataEntrada" Type="DateTime" Precision="0" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CPF" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="DataNascimento" Type="DateTime" Precision="0" />
+          <Property Name="Matricula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SenhaConvenio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdBancoConta" Type="Int32" />
+          <Property Name="Agencia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ContaCorrente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdTipoConta" Type="Int32" />
+          <Property Name="IdUsuarioDigitacao" Type="Int32" />
+          <Property Name="DataDigitacao" Type="DateTime" Precision="3" />
+          <Property Name="IdConvenio" Type="Int32" Nullable="false" />
+          <Property Name="IdBanco" Type="Int32" Nullable="false" />
+          <Property Name="ValorParcela" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MargemLivre" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MargemUtilizada" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Coeficiente" Type="Double" />
+          <Property Name="QtdeParcelas" Type="Int32" />
+          <Property Name="ValorContrato" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Tabela" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DataCoeficiente" Type="DateTime" Precision="0" />
+          <Property Name="Observacao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Endereco" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroEndereco" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bairro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Uf" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Cep" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Banco" Relationship="dbGDocModel.FK_Proposta_Banco1" FromRole="Proposta" ToRole="Banco" />
+          <NavigationProperty Name="Convenio" Relationship="Self.FK_Proposta_Convenio" FromRole="Proposta" ToRole="Convenio" />
+          <NavigationProperty Name="Dividas" Relationship="Self.FK_Divida_Proposta" FromRole="Proposta" ToRole="Divida" />
+          <NavigationProperty Name="DocumentosProposta" Relationship="Self.FK_DocumentoProposta_Proposta" FromRole="Proposta" ToRole="DocumentoProposta" />
+          <NavigationProperty Name="TipoConta" Relationship="Self.FK_Proposta_TipoConta" FromRole="Proposta" ToRole="TipoConta" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Proposta_Usuario" FromRole="Proposta" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioDigitacao" Relationship="Self.FK_Proposta_Usuario1" FromRole="Proposta" ToRole="Usuario" />
+          <NavigationProperty Name="TelefonesProposta" Relationship="Self.FK_TelefoneProposta_Proposta" FromRole="Proposta" ToRole="TelefoneProposta" />
+          <Property Name="Complemento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BancoConta" Relationship="dbGDocModel.FK_Proposta_Banco" FromRole="Proposta" ToRole="Banco" />
+          <Property Name="StatusDocumentacao" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DataImpressao" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="TelefoneProposta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProposta" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoTelefone" Type="Int32" />
+          <Property Name="Telefone" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Proposta" Relationship="Self.FK_TelefoneProposta_Proposta" FromRole="TelefoneProposta" ToRole="Proposta" />
+          <NavigationProperty Name="TipoTelefone" Relationship="Self.FK_TelefoneProposta_TipoTelefone" FromRole="TelefoneProposta" ToRole="TipoTelefone" />
+        </EntityType>
+        <EntityType Name="TelefoneUsuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoTelefone" Type="Int32" />
+          <Property Name="Telefone" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TipoTelefone" Relationship="Self.FK_TelefoneUsuario_TipoTelefone" FromRole="TelefoneUsuario" ToRole="TipoTelefone" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_TelefoneUsuario_Usuario" FromRole="TelefoneUsuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="TipoConta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Propostas" Relationship="Self.FK_Proposta_TipoConta" FromRole="TipoConta" ToRole="Proposta" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BancoDocumentos" Relationship="Self.FK_BancoDocumento_TipoDocumento" FromRole="TipoDocumento" ToRole="BancoDocumento" />
+          <NavigationProperty Name="DocumentosProposta" Relationship="Self.FK_DocumentoProposta_TipoDocumento" FromRole="TipoDocumento" ToRole="DocumentoProposta" />
+        </EntityType>
+        <EntityType Name="TipoTelefone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TelefonesProposta" Relationship="Self.FK_TelefoneProposta_TipoTelefone" FromRole="TipoTelefone" ToRole="TelefoneProposta" />
+          <NavigationProperty Name="TelefonesUsuario" Relationship="Self.FK_TelefoneUsuario_TipoTelefone" FromRole="TipoTelefone" ToRole="TelefoneUsuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Senha" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+          <Property Name="IdFilial" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Empresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cpf" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="Rg" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Endereco" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroEndereco" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bairro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Uf" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Cep" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="TrocarSenha" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Filial" Relationship="Self.FK_Usuario_Filial" FromRole="Usuario" ToRole="Filial" />
+          <NavigationProperty Name="Perfil" Relationship="Self.FK_Usuario_Perfil" FromRole="Usuario" ToRole="Perfil" />
+          <NavigationProperty Name="Propostas" Relationship="Self.FK_Proposta_Usuario" FromRole="Usuario" ToRole="Proposta" />
+          <NavigationProperty Name="PropostasDigitadas" Relationship="Self.FK_Proposta_Usuario1" FromRole="Usuario" ToRole="Proposta" />
+          <NavigationProperty Name="TelefonesUsuario" Relationship="Self.FK_TelefoneUsuario_Usuario" FromRole="Usuario" ToRole="TelefoneUsuario" />
+          <Property Name="Complemento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Acesso_Funcao">
+          <End Role="Funcao" Type="Self.Funcao" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acesso" Type="Self.Acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Acesso">
+              <PropertyRef Name="IdFuncao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Acesso_Perfil">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Acesso" Type="Self.Acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Acesso">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoDocumento_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BancoDocumento" Type="Self.BancoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BancoDocumento">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Divida_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="1" />
+          <End Role="Divida" Type="Self.Divida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Divida">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Banco">
+          <End Role="Banco" Type="Self.Banco" Multiplicity="0..1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdBancoConta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BancoDocumento_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BancoDocumento" Type="Self.BancoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BancoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Convenio">
+          <End Role="Convenio" Type="Self.Convenio" Multiplicity="1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Convenio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdConvenio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Divida_Proposta">
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Divida" Type="Self.Divida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proposta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Divida">
+              <PropertyRef Name="IdProposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoProposta_Proposta">
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DocumentoProposta" Type="Self.DocumentoProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proposta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentoProposta">
+              <PropertyRef Name="IdProposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoProposta_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="DocumentoProposta" Type="Self.DocumentoProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentoProposta">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Filial">
+          <End Role="Filial" Type="Self.Filial" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdFilial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Funcao_Funcao">
+          <End Role="Funcao" Type="Self.Funcao" Multiplicity="0..1" />
+          <End Role="Funcao1" Type="Self.Funcao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Funcao1">
+              <PropertyRef Name="IdFuncaoSuperior" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Perfil">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_TipoConta">
+          <End Role="TipoConta" Type="Self.TipoConta" Multiplicity="0..1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoConta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdTipoConta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proposta_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdUsuarioDigitacao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneProposta_Proposta">
+          <End Role="Proposta" Type="Self.Proposta" Multiplicity="1" />
+          <End Role="TelefoneProposta" Type="Self.TelefoneProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proposta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneProposta">
+              <PropertyRef Name="IdProposta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneProposta_TipoTelefone">
+          <End Role="TipoTelefone" Type="Self.TipoTelefone" Multiplicity="0..1" />
+          <End Role="TelefoneProposta" Type="Self.TelefoneProposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoTelefone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneProposta">
+              <PropertyRef Name="IdTipoTelefone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneUsuario_TipoTelefone">
+          <End Role="TipoTelefone" Type="Self.TipoTelefone" Multiplicity="0..1" />
+          <End Role="TelefoneUsuario" Type="Self.TelefoneUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoTelefone">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneUsuario">
+              <PropertyRef Name="IdTipoTelefone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TelefoneUsuario_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="TelefoneUsuario" Type="Self.TelefoneUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TelefoneUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acessos" EntityType="Self.Acesso" />
+          <EntitySet Name="Bancos" EntityType="Self.Banco" />
+          <EntitySet Name="BancoDocumentos" EntityType="Self.BancoDocumento" />
+          <EntitySet Name="Convenios" EntityType="Self.Convenio" />
+          <EntitySet Name="Dividas" EntityType="Self.Divida" />
+          <EntitySet Name="DocumentosProposta" EntityType="Self.DocumentoProposta" />
+          <EntitySet Name="Filiais" EntityType="Self.Filial" />
+          <EntitySet Name="Funcoes" EntityType="Self.Funcao" />
+          <EntitySet Name="Parametros" EntityType="Self.Parametro" />
+          <EntitySet Name="Perfis" EntityType="Self.Perfil" />
+          <EntitySet Name="Propostas" EntityType="Self.Proposta" />
+          <EntitySet Name="TelefonesProposta" EntityType="Self.TelefoneProposta" />
+          <EntitySet Name="TelefonesUsuario" EntityType="Self.TelefoneUsuario" />
+          <EntitySet Name="TiposConta" EntityType="Self.TipoConta" />
+          <EntitySet Name="TiposDocumento" EntityType="Self.TipoDocumento" />
+          <EntitySet Name="TiposTelefone" EntityType="Self.TipoTelefone" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Acesso_Funcao" Association="Self.FK_Acesso_Funcao">
+            <End Role="Funcao" EntitySet="Funcoes" />
+            <End Role="Acesso" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Acesso_Perfil" Association="Self.FK_Acesso_Perfil">
+            <End Role="Perfil" EntitySet="Perfis" />
+            <End Role="Acesso" EntitySet="Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoDocumento_Banco" Association="Self.FK_BancoDocumento_Banco">
+            <End Role="Banco" EntitySet="Bancos" />
+            <End Role="BancoDocumento" EntitySet="BancoDocumentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Divida_Banco" Association="Self.FK_Divida_Banco">
+            <End Role="Banco" EntitySet="Bancos" />
+            <End Role="Divida" EntitySet="Dividas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Banco" Association="Self.FK_Proposta_Banco">
+            <End Role="Banco" EntitySet="Bancos" />
+            <End Role="Proposta" EntitySet="Propostas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BancoDocumento_TipoDocumento" Association="Self.FK_BancoDocumento_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TiposDocumento" />
+            <End Role="BancoDocumento" EntitySet="BancoDocumentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Convenio" Association="Self.FK_Proposta_Convenio">
+            <End Role="Convenio" EntitySet="Convenios" />
+            <End Role="Proposta" EntitySet="Propostas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Divida_Proposta" Association="Self.FK_Divida_Proposta">
+            <End Role="Proposta" EntitySet="Propostas" />
+            <End Role="Divida" EntitySet="Dividas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoProposta_Proposta" Association="Self.FK_DocumentoProposta_Proposta">
+            <End Role="Proposta" EntitySet="Propostas" />
+            <End Role="DocumentoProposta" EntitySet="DocumentosProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoProposta_TipoDocumento" Association="Self.FK_DocumentoProposta_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TiposDocumento" />
+            <End Role="DocumentoProposta" EntitySet="DocumentosProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Filial" Association="Self.FK_Usuario_Filial">
+            <End Role="Filial" EntitySet="Filiais" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Funcao_Funcao" Association="Self.FK_Funcao_Funcao">
+            <End Role="Funcao" EntitySet="Funcoes" />
+            <End Role="Funcao1" EntitySet="Funcoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Perfil" Association="Self.FK_Usuario_Perfil">
+            <End Role="Perfil" EntitySet="Perfis" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_TipoConta" Association="Self.FK_Proposta_TipoConta">
+            <End Role="TipoConta" EntitySet="TiposConta" />
+            <End Role="Proposta" EntitySet="Propostas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Usuario" Association="Self.FK_Proposta_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Proposta" EntitySet="Propostas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proposta_Usuario1" Association="Self.FK_Proposta_Usuario1">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Proposta" EntitySet="Propostas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneProposta_Proposta" Association="Self.FK_TelefoneProposta_Proposta">
+            <End Role="Proposta" EntitySet="Propostas" />
+            <End Role="TelefoneProposta" EntitySet="TelefonesProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneProposta_TipoTelefone" Association="Self.FK_TelefoneProposta_TipoTelefone">
+            <End Role="TipoTelefone" EntitySet="TiposTelefone" />
+            <End Role="TelefoneProposta" EntitySet="TelefonesProposta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneUsuario_TipoTelefone" Association="Self.FK_TelefoneUsuario_TipoTelefone">
+            <End Role="TipoTelefone" EntitySet="TiposTelefone" />
+            <End Role="TelefoneUsuario" EntitySet="TelefonesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TelefoneUsuario_Usuario" Association="Self.FK_TelefoneUsuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="TelefoneUsuario" EntitySet="TelefonesUsuario" />
+          </AssociationSet>
+          <FunctionImport Name="GravaAcessos" ReturnType="Collection(dbGDocModel.GravaAcessos_Result)">
+            <Parameter Name="seq" Mode="In" Type="Int32" />
+            <Parameter Name="IdPerfil" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GravaBancoDocumentos">
+            <Parameter Name="seq" Mode="In" Type="Int32" />
+            <Parameter Name="IdBanco" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ObtemSequencia" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="GravaTelefonesUsuario">
+            <Parameter Name="seq" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <AssociationSet Name="FK_Proposta_Banco1" Association="dbGDocModel.FK_Proposta_Banco1">
+            <End Role="Banco" EntitySet="Bancos" />
+            <End Role="Proposta" EntitySet="Propostas" />
+          </AssociationSet>
+          <FunctionImport Name="GravaDividasProposta">
+            <Parameter Name="seq" Mode="In" Type="Int32" />
+            <Parameter Name="IdProposta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GravaTelefonesProposta">
+            <Parameter Name="seq" Mode="In" Type="Int32" />
+            <Parameter Name="IdProposta" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GravaAcessos_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="IdFuncao" Nullable="false" />
+          <Property Type="Int32" Name="IdPerfil" Nullable="false" />
+        </ComplexType>
+        <Association Name="FK_Proposta_Banco1">
+          <End Type="dbGDocModel.Banco" Role="Banco" Multiplicity="1" />
+          <End Type="dbGDocModel.Proposta" Role="Proposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proposta">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbGDocModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Acessos">
+            <EntityTypeMapping TypeName="dbGDocModel.Acesso">
+              <MappingFragment StoreEntitySet="Acesso">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdFuncao" ColumnName="IdFuncao" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bancos">
+            <EntityTypeMapping TypeName="dbGDocModel.Banco">
+              <MappingFragment StoreEntitySet="Banco">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BancoDocumentos">
+            <EntityTypeMapping TypeName="dbGDocModel.BancoDocumento">
+              <MappingFragment StoreEntitySet="BancoDocumento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="Obrigatorio" ColumnName="Obrigatorio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Convenios">
+            <EntityTypeMapping TypeName="dbGDocModel.Convenio">
+              <MappingFragment StoreEntitySet="Convenio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dividas">
+            <EntityTypeMapping TypeName="dbGDocModel.Divida">
+              <MappingFragment StoreEntitySet="Divida">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdProposta" ColumnName="IdProposta" />
+                <ScalarProperty Name="SaldoDevedor" ColumnName="SaldoDevedor" />
+                <ScalarProperty Name="ValorParcela" ColumnName="ValorParcela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentosProposta">
+            <EntityTypeMapping TypeName="dbGDocModel.DocumentoProposta">
+              <MappingFragment StoreEntitySet="DocumentoProposta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProposta" ColumnName="IdProposta" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="NomeArquivo" ColumnName="NomeArquivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Filiais">
+            <EntityTypeMapping TypeName="dbGDocModel.Filial">
+              <MappingFragment StoreEntitySet="Filial">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Ativa" ColumnName="Ativa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Funcoes">
+            <EntityTypeMapping TypeName="dbGDocModel.Funcao">
+              <MappingFragment StoreEntitySet="Funcao">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdFuncaoSuperior" ColumnName="IdFuncaoSuperior" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametros">
+            <EntityTypeMapping TypeName="dbGDocModel.Parametro">
+              <MappingFragment StoreEntitySet="Parametro">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="PastaRaiz" ColumnName="PastaRaiz" />
+                <ScalarProperty Name="TaxaCompressao" ColumnName="TaxaCompressao" />
+                <ScalarProperty Name="Sequencia" ColumnName="Sequencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfis">
+            <EntityTypeMapping TypeName="dbGDocModel.Perfil">
+              <MappingFragment StoreEntitySet="Perfil">
+                <ScalarProperty Name="LimitaPropostaUsuarioLogado" ColumnName="LimitaPropostaUsuarioLogado" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propostas">
+            <EntityTypeMapping TypeName="dbGDocModel.Proposta">
+              <MappingFragment StoreEntitySet="Proposta">
+                <ScalarProperty Name="DataImpressao" ColumnName="DataImpressao" />
+                <ScalarProperty Name="StatusDocumentacao" ColumnName="StatusDocumentacao" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="DataEntrada" ColumnName="DataEntrada" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="CPF" ColumnName="CPF" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="SenhaConvenio" ColumnName="SenhaConvenio" />
+                <ScalarProperty Name="IdBancoConta" ColumnName="IdBancoConta" />
+                <ScalarProperty Name="Agencia" ColumnName="Agencia" />
+                <ScalarProperty Name="ContaCorrente" ColumnName="ContaCorrente" />
+                <ScalarProperty Name="IdTipoConta" ColumnName="IdTipoConta" />
+                <ScalarProperty Name="IdUsuarioDigitacao" ColumnName="IdUsuarioDigitacao" />
+                <ScalarProperty Name="DataDigitacao" ColumnName="DataDigitacao" />
+                <ScalarProperty Name="IdConvenio" ColumnName="IdConvenio" />
+                <ScalarProperty Name="ValorParcela" ColumnName="ValorParcela" />
+                <ScalarProperty Name="MargemLivre" ColumnName="MargemLivre" />
+                <ScalarProperty Name="MargemUtilizada" ColumnName="MargemUtilizada" />
+                <ScalarProperty Name="Coeficiente" ColumnName="Coeficiente" />
+                <ScalarProperty Name="QtdeParcelas" ColumnName="QtdeParcelas" />
+                <ScalarProperty Name="ValorContrato" ColumnName="ValorContrato" />
+                <ScalarProperty Name="Tabela" ColumnName="Tabela" />
+                <ScalarProperty Name="DataCoeficiente" ColumnName="DataCoeficiente" />
+                <ScalarProperty Name="Observacao" ColumnName="Observacao" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="NumeroEndereco" ColumnName="NumeroEndereco" />
+                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="Uf" ColumnName="Uf" />
+                <ScalarProperty Name="Cep" ColumnName="Cep" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelefonesProposta">
+            <EntityTypeMapping TypeName="dbGDocModel.TelefoneProposta">
+              <MappingFragment StoreEntitySet="TelefoneProposta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProposta" ColumnName="IdProposta" />
+                <ScalarProperty Name="IdTipoTelefone" ColumnName="IdTipoTelefone" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelefonesUsuario">
+            <EntityTypeMapping TypeName="dbGDocModel.TelefoneUsuario">
+              <MappingFragment StoreEntitySet="TelefoneUsuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdTipoTelefone" ColumnName="IdTipoTelefone" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposConta">
+            <EntityTypeMapping TypeName="dbGDocModel.TipoConta">
+              <MappingFragment StoreEntitySet="TipoConta">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposDocumento">
+            <EntityTypeMapping TypeName="dbGDocModel.TipoDocumento">
+              <MappingFragment StoreEntitySet="TipoDocumento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TiposTelefone">
+            <EntityTypeMapping TypeName="dbGDocModel.TipoTelefone">
+              <MappingFragment StoreEntitySet="TipoTelefone">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="dbGDocModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="IdFilial" ColumnName="IdFilial" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Cpf" ColumnName="Cpf" />
+                <ScalarProperty Name="Rg" ColumnName="Rg" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="NumeroEndereco" ColumnName="NumeroEndereco" />
+                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="Uf" ColumnName="Uf" />
+                <ScalarProperty Name="Cep" ColumnName="Cep" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="TrocarSenha" ColumnName="TrocarSenha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GravaAcessos" FunctionName="dbGDocModel.Store.GravaAcessos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dbGDocModel.GravaAcessos_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdFuncao" ColumnName="IdFuncao" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GravaBancoDocumentos" FunctionName="dbGDocModel.Store.GravaBancoDocumentos" />
+          <FunctionImportMapping FunctionImportName="ObtemSequencia" FunctionName="dbGDocModel.Store.ObtemSequencia" />
+          <FunctionImportMapping FunctionImportName="GravaTelefonesUsuario" FunctionName="dbGDocModel.Store.GravaTelefonesUsuario" />
+          <FunctionImportMapping FunctionImportName="GravaDividasProposta" FunctionName="dbGDocModel.Store.GravaDividasProposta" />
+          <FunctionImportMapping FunctionImportName="GravaTelefonesProposta" FunctionName="dbGDocModel.Store.GravaTelefonesProposta" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
